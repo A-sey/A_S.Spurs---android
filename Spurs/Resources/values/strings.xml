@@ -2,4 +2,5 @@
     <string name="app_name">Приложение</string>
     <string name="action_settings">Настройки</string>
     <string name="action_file">Выбрать файл</string>
+    <string name="action_search">Поиск по ответам</string>
 </resources>

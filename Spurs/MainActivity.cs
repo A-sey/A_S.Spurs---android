@@ -23,6 +23,7 @@ namespace Spurs
         public String DBName = "";
         List<Quest> list = new List<Quest>();
         List<Quest> find = new List<Quest>();
+        bool SEARCHINANSWER = false;
         protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
@@ -118,6 +119,13 @@ namespace Spurs
                 }
                 return true;
             }
+            if (id == Resource.Id.action_search)
+            {
+                SEARCHINANSWER = !SEARCHINANSWER;
+                item.SetChecked(SEARCHINANSWER);
+                FindingText();
+                FillList();
+            }
 
             return base.OnOptionsItemSelected(item);
         }
@@ -175,8 +183,11 @@ namespace Spurs
             foreach(Quest i in list)
             {
                 bool skip = false;
+                String searchIn = i.GetQuestion();
+                if (SEARCHINANSWER)
+                    searchIn += " " + i.GetAnswer();
                 foreach (String j in parts)
-                    if (!i.GetQuestion().ToLower().Contains(j.ToLower()))
+                    if (!searchIn.ToLower().Contains(j.ToLower()))
                         skip = true;
                 if (!skip) find.Add(i);
             }
@@ -205,12 +216,10 @@ namespace Spurs
 
         private void But_Click(object sender, EventArgs e)
         {
-            var intent = new Android.Content.Intent(this, typeof(Answers));
+            var intent = new Intent(this, typeof(Answers));
             int c = ((Button)sender).Id;
             intent.PutExtra("text", find[c].GetQuestion());
             intent.PutExtra("answ", find[c].GetAnswer());
-            intent.PutExtra("imag", find[c].GetImage());
-            intent.PutExtra("path", DBName.Replace(".html","/"));
             StartActivity(intent);
             //throw new NotImplementedException();
         }

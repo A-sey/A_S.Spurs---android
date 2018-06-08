@@ -11,4 +11,12 @@
         android:orderInCategory="99"
         android:title="@string/action_file"
         app:showAsAction="never" />
+  <group android:checkableBehavior="all">
+    <item
+          android:id="@+id/action_search"
+          android:orderInCategory="99"
+          android:title="@string/action_search"
+          android:checked="false"
+          app:showAsAction="never" />
+  </group>
 </menu>
